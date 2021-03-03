@@ -18,4 +18,10 @@ public class SightingsTest {
         Sightings testSightings = new Sightings("Zone B", "Kayle", "rhino");
         assertEquals("rhino", testSightings.getAnimalName());
     }
+    @Test
+    public void save_successfully_List() {
+        Sightings testSightings = new Sightings("Zone A", "Maya", "koala");;
+        testSightings.save();
+        assertTrue(Endagered.getAllEndagered().get(0).equals(testSightings));
+    }
 }
