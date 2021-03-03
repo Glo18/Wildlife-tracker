@@ -1,5 +1,8 @@
 import org.sql2o.Connection;
+import org.sql2o.Query;
 import org.sql2o.Sql2oException;
+
+import java.util.List;
 
 public class Sightings {
     private int id;
@@ -34,6 +37,16 @@ public class Sightings {
         return rangerName;
     }
 
+    public static List<Sightings> getAllSightings(){
+        String sql = "SELECT * FROM sightings;";
+
+        try (Connection con = DB.sql2o.open()){
+            Query query = con.createQuery(sql);
+            System.out.println(query.executeAndFetch(Sightings.class));
+            return query.executeAndFetch(Sightings.class);
+        }
+    }
+
     public void save() {
         try (Connection con = DB.sql2o.open()) {
             String sql = "INSERT INTO sightings (location, rangerName, aniName) VALUES (:location, :rangerName, :aniName);";
@@ -45,6 +58,18 @@ public class Sightings {
                     .executeUpdate()
                     .getKey();
             setId(id);
+        }catch (Sql2oException ex ){
+            System.out.println(ex);
+        }
+    }
+
+    public void delete() {
+        try(Connection con = DB.sql2o.open()) {
+            String sql = "DELETE FROM sightings WHERE id = :id;";
+            con.createQuery(sql)
+                    .addParameter("id", this.id)
+                    .executeUpdate();
+
         }catch (Sql2oException ex ){
             System.out.println(ex);
         }

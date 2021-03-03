@@ -1,5 +1,7 @@
 import org.sql2o.Connection;
 
+import java.util.List;
+
 public class Animals {
     private String name;
     private int id;
@@ -8,7 +10,6 @@ public class Animals {
 
 
     public Animals(String name) {
-
         this.name = name;
         this.setType(DATABASE_TYPE);
     }
@@ -18,20 +19,18 @@ public class Animals {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getId() {
 
         return id;
     }
 
     private void setId(int id) {
+
         this.id = id;
     }
 
     private void setType(String type) {
+
         this.type = type;
     }
 
@@ -58,4 +57,23 @@ public class Animals {
         }
     }
 
+    public static List<Animals> getAllAnimals(){
+        String sql = "SELECT * FROM animals where type='animal';";
+
+        try (Connection con = DB.sql2o.open()){
+            return   con.createQuery(sql)
+                    .throwOnMappingFailure(false)
+                    .executeAndFetch(Animals.class);
+
+        }
+    }
+
+    public void delete() {
+        try (Connection con = DB.sql2o.open()){
+            String sql = "DELETE FROM animals WHERE id = :id;";
+            con.createQuery(sql)
+                    .addParameter("id", this.id)
+                    .executeUpdate();
+        }
+    }
 }
