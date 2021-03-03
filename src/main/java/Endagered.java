@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Endagered {
     private int id;
     private String name;
@@ -34,5 +36,9 @@ public class Endagered {
     public void setId(int id) {
 
         this.id = id;
+    }
+
+    public static List<Endagered> getAllEndagered() {
+
     }
 }
