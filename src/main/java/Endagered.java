@@ -9,11 +9,26 @@ public class Endagered {
     private String health;
     private String age;
 
+    public static final String HEALTHY = "healthy";
+    public static final String ILL = "ill";
+    public static final String OKAY = "okay";
+    public static final String NEWBORN = "newborn";
+    public static final String YOUNG = "young";
+    public static final String ADULT = "adult";
+
+    private static final String DATABASE_TYPE = "endangered";
+    private String type;
+
     public Endagered(String name, String health, String age) {
         this.id = id;
         this.name = name;
         this.health = health;
         this.age = age;
+        this.setType(DATABASE_TYPE);
+    }
+
+    private void setType(String type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -40,6 +55,10 @@ public class Endagered {
         return age;
     }
 
+    public String getType() {
+        return type;
+    }
+
     public void setAge(String age) {
         this.age = age;
     }
@@ -52,6 +71,10 @@ public class Endagered {
     public void setId(int id) {
 
         this.id = id;
+    }
+
+    public static String getDatabaseType() {
+        return DATABASE_TYPE;
     }
 
     @Override

@@ -34,6 +34,10 @@ public class Animals {
         this.type = type;
     }
 
+    public static Object all() {
+        return all();
+    }
+
     @Override
     public boolean equals(Object otherAnimals){
         if (!(otherAnimals instanceof Animals)) {
