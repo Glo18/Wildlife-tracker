@@ -53,5 +53,35 @@ public class App {
             model.put("endangered", endangered);
             return new ModelAndView(model, "SuccessEndagered.hbs");
         }, new HandlebarsTemplateEngine());
+
+        get("/Endagered", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("Endangered", Endagered.getAllEndagered());
+            return new ModelAndView(model, "Endagered.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        get("/SightingsForm", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "SightingsForm.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        post("/spotted", (request, response) -> {
+
+            Map<String, Object> model = new HashMap<>();
+            String location = request.queryParams("location");
+            String rangerName = request.queryParams("rangerName");
+            String animalName = request.queryParams("animalName");
+
+            Sightings sightings = new Sightings(location,rangerName, animalName);
+            sightings.save();
+            model.put("sightings", sightings);
+            return new ModelAndView(model, "SuccessSightings.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        get("/Sightings", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("Sightings", Sightings.getAllSightings());
+            return new ModelAndView(model, "Sightings.hbs");
+        }, new HandlebarsTemplateEngine());
     }
 }
