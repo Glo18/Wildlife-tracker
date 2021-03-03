@@ -2,7 +2,7 @@ import org.sql2o.Connection;
 
 import java.util.List;
 
-public class Animals {
+public class Animals implements DatabaseManagement {
     private String name;
     private int id;
     public String type;
@@ -14,9 +14,15 @@ public class Animals {
         this.setType(DATABASE_TYPE);
     }
 
-    public String getName() {
+//    public Animals(String name) {
+//    }
 
+    public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {
@@ -24,16 +30,12 @@ public class Animals {
         return id;
     }
 
-    private void setId(int id) {
-
+    public void setId(int id) {
         this.id = id;
     }
-
-    private void setType(String type) {
-
+    public void setType(String type) {
         this.type = type;
     }
-
     public static Object all() {
         return all();
     }

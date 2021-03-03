@@ -4,7 +4,8 @@ import org.sql2o.Sql2oException;
 
 import java.util.List;
 
-public class Sightings {
+public class Sightings implements DatabaseManagement {
+
     private int id;
     private String location;
     private String rangerName;
@@ -62,7 +63,6 @@ public class Sightings {
             System.out.println(ex);
         }
     }
-
     public void delete() {
         try(Connection con = DB.sql2o.open()) {
             String sql = "DELETE FROM sightings WHERE id = :id;";
@@ -74,4 +74,5 @@ public class Sightings {
             System.out.println(ex);
         }
     }
+
 }

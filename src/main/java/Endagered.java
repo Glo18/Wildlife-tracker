@@ -3,7 +3,7 @@ import org.sql2o.Sql2oException;
 
 import java.util.List;
 
-public class Endagered {
+public class Endagered implements DatabaseManagement {
     private int id;
     private String name;
     private String health;
@@ -31,27 +31,23 @@ public class Endagered {
         this.type = type;
     }
 
-    public String getName() {
-
+    public String getName(){
         return name;
     }
 
     public void setName(String name) {
-
         this.name = name;
     }
 
-    public String getHealth() {
-
+    public String getHealth(){
         return health;
     }
 
     public void setHealth(String health) {
-
         this.health = health;
     }
 
-    public String getAge() {
+    public String getAge(){
         return age;
     }
 
@@ -64,12 +60,10 @@ public class Endagered {
     }
 
     public int getId() {
-
         return id;
     }
 
     public void setId(int id) {
-
         this.id = id;
     }
 
@@ -77,8 +71,9 @@ public class Endagered {
         return DATABASE_TYPE;
     }
 
+
     @Override
-    public boolean equals(Object otherEndangered) {
+    public boolean equals(Object otherEndangered){
         if (!(otherEndangered instanceof Endagered)) {
             return false;
         } else {
@@ -88,11 +83,11 @@ public class Endagered {
         }
     }
 
-    public static List<Endagered> getAllEndagered() {
+    public static List<Endagered> getAllEndagered(){
         String sql = "SELECT * FROM animals WHERE type = 'endangered';";
 
-        try (Connection con = DB.sql2o.open()) {
-            return con.createQuery(sql)
+        try (Connection con = DB.sql2o.open()){
+            return   con.createQuery(sql)
                     .throwOnMappingFailure(false)
                     .executeAndFetch(Endagered.class);
 
@@ -100,7 +95,7 @@ public class Endagered {
     }
 
     public void save() {
-        try (Connection con = DB.sql2o.open()) {
+        try (Connection con = DB.sql2o.open()){
             String sql = "INSERT INTO animals (name, health, age) VALUES (:name, :health, :age)";
             this.id = (int) con.createQuery(sql, true)
                     .throwOnMappingFailure(false)
@@ -110,7 +105,7 @@ public class Endagered {
                     .executeUpdate()
                     .getKey();
             setId(id);
-        } catch (Sql2oException ex) {
+        }catch (Sql2oException ex ){
             System.out.println(ex);
         }
     }
