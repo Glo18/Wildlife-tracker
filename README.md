@@ -17,7 +17,7 @@ Get a computer and internet Clone the repository Git clone repository--link Move
 2.Type in psql 
 3.CREATE DATABASE wildlife_tracker 
 4.\c wildlife_tracker 
-5.CREATE TABLE animals (id SERIAL PRIMARY KEY, name varchar, health varchar, age INTEGER, type VARCHAR)
+5.CREATE TABLE animals (id SERIAL PRIMARY KEY, name varchar, health varchar, age INTEGER, endangered VARCHAR)
 6.CREATE TABLE sightings (id SERIAL PRIMARY KEY, rangerName varchar, location varchar, animalName varchar)
 7.CREATE DATABASE wildlife_tracker_test WITH TEMPLATE wildlife_tracker.
 
