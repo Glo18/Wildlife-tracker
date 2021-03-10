@@ -15,9 +15,9 @@ public class AnimalsTest {
         assertEquals("Elephant", testAnimals.getName());
     }
     @Test
-    public void save_successfully_List() {
+    public void allInstancesAreSaved() {
         Animals testAnimals = new Animals("Elephant");
         testAnimals.save();
-        assertTrue(Endagered.getAllEndagered().get(0).equals(testAnimals));
+        assertTrue(Endangered.getAllEndangered().get(0).equals(testAnimals));
     }
 }

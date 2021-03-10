@@ -3,7 +3,7 @@ import org.sql2o.Sql2oException;
 
 import java.util.List;
 
-public class Endagered implements DatabaseManagement {
+public class Endangered implements DatabaseManagement {
     private int id;
     private String name;
     private String health;
@@ -19,7 +19,7 @@ public class Endagered implements DatabaseManagement {
     private static final String DATABASE_TYPE = "endangered";
     private String type;
 
-    public Endagered(String name, String health, String age) {
+    public Endangered(String name, String health, String age) {
         this.id = id;
         this.name = name;
         this.health = health;
@@ -74,22 +74,22 @@ public class Endagered implements DatabaseManagement {
 
     @Override
     public boolean equals(Object otherEndangered){
-        if (!(otherEndangered instanceof Endagered)) {
+        if (!(otherEndangered instanceof Endangered)) {
             return false;
         } else {
-            Endagered newEndangered = (Endagered) otherEndangered;
+            Endangered newEndangered = (Endangered) otherEndangered;
             return this.getName().equals(newEndangered.getName()) &&
                     this.getId() == newEndangered.getId();
         }
     }
 
-    public static List<Endagered> getAllEndagered(){
-        String sql = "SELECT * FROM animals WHERE type = 'endangered';";
+    public static List<Endangered> getAllEndangered(){
+        String sql = "SELECT * FROM animals WHERE type = 'endangered'";
 
         try (Connection con = DB.sql2o.open()){
             return   con.createQuery(sql)
                     .throwOnMappingFailure(false)
-                    .executeAndFetch(Endagered.class);
+                    .executeAndFetch(Endangered.class);
 
         }
     }

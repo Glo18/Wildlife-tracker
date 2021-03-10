@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.*;
+import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class App {
     public static void main(String[] args) {
         staticFileLocation("/public");
 
+        enableDebugScreen();
         get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             return new ModelAndView(model, "index.hbs");
@@ -23,41 +25,42 @@ public class App {
         post("/addAnimal", (request, response) -> {
 
             Map<String, Object> model = new HashMap<>();
-            String name = request.queryParams("animalsName");
+            String name = request.queryParams("aniName");
 
-            Animals animals = new Animals(name);
-            animals.save();
-            model.put("animals", animals);
+            Animals animal = new Animals(name);
+            animal.save();
+            model.put("animals", animal);
             return new ModelAndView(model, "SuccessAnimal.hbs");
         }, new HandlebarsTemplateEngine());
 
         get("/Animals", (request, response) -> {
+            System.out.println(Animals.getAllAnimals().get(0).getAniName());
             Map<String, Object> model = new HashMap<>();
             model.put("Animals", Animals.getAllAnimals());
             return new ModelAndView(model, "Animals.hbs");
         }, new HandlebarsTemplateEngine());
 
-        get("/EndageredForm", (request, response) -> {
+        get("/EndangeredForm", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            return new ModelAndView(model, "EndageredForm.hbs");
+            return new ModelAndView(model, "EndangeredForm.hbs");
         }, new HandlebarsTemplateEngine());
 
-        post("/report", (request, response) -> {
+        post("/EndangeredForm", (request, response) -> {
 
             Map<String, Object> model = new HashMap<>();
             String name = request.queryParams("name");
             String health = request.queryParams("health");
             String age = request.queryParams("age");
-            Endagered endangered = new Endagered(name, health, age);
+            Endangered endangered = new Endangered(name, health, age);
             endangered.save();
             model.put("endangered", endangered);
-            return new ModelAndView(model, "SuccessEndagered.hbs");
+            return new ModelAndView(model, "SuccessEndangered.hbs");
         }, new HandlebarsTemplateEngine());
 
-        get("/Endagered", (request, response) -> {
+        get("/Endangered", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("Endangered", Endagered.getAllEndagered());
-            return new ModelAndView(model, "Endagered.hbs");
+            model.put("Endangered", Endangered.getAllEndangered());
+            return new ModelAndView(model, "Endangered.hbs");
         }, new HandlebarsTemplateEngine());
 
         get("/SightingsForm", (request, response) -> {

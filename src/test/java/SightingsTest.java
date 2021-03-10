@@ -22,6 +22,6 @@ public class SightingsTest {
     public void save_successfully_List() {
         Sightings testSightings = new Sightings("Zone A", "Maya", "koala");;
         testSightings.save();
-        assertTrue(Endagered.getAllEndagered().get(0).equals(testSightings));
+        assertTrue(Endangered.getAllEndangered().get(0).equals(testSightings));
     }
 }

@@ -3,26 +3,25 @@ import org.sql2o.Connection;
 import java.util.List;
 
 public class Animals implements DatabaseManagement {
-    private String name;
+    private String aniName;
     private int id;
-    public String type;
+    public boolean endangered;
     private final String DATABASE_TYPE = "animal";
 
 
-    public Animals(String name) {
-        this.name = name;
-        this.setType(DATABASE_TYPE);
+    public Animals(String aniName) {
+        this.aniName = aniName;
     }
 
 //    public Animals(String name) {
 //    }
 
-    public String getName() {
-        return name;
+    public String getAniName() {
+        return aniName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAniName(String aniName) {
+        this.aniName = aniName;
     }
 
     public int getId() {
@@ -33,9 +32,7 @@ public class Animals implements DatabaseManagement {
     public void setId(int id) {
         this.id = id;
     }
-    public void setType(String type) {
-        this.type = type;
-    }
+
     public static Object all() {
         return all();
     }
@@ -46,29 +43,43 @@ public class Animals implements DatabaseManagement {
             return false;
         }else {
             Animals newAnimals = (Animals) otherAnimals;
-            return this.getName().equals(newAnimals.getName()) &&
+            return this.getAniName().equals(newAnimals.getAniName()) &&
                     this.getId() == (newAnimals.getId());
         }
     }
 
     public void save() {
         try (Connection con = DB.sql2o.open()) {
-            String sql = "INSERT INTO animals (name, type) VALUES (:name, :type)";
+            String sql = "INSERT INTO animals (aniName, endangered) VALUES (:aniName, :endangered)";
             this.id = (int) con.createQuery(sql, true)
-                    .addParameter("name", this.name)
-                    .addParameter("type", this.type)
+                    .addParameter("aniName", this.aniName)
+                    .addParameter("endangered", this.endangered)
                     .executeUpdate()
                     .getKey();
-            setId(id);
+//            setId(id);
         }
     }
 
+//        public void save() {
+//            if (this.name.equals("") || this.type.equals("") || this.name.equals(null) || this.type.equals(null)) {
+//                throw new IllegalArgumentException("Fields cannot be Empty");
+//            }
+//            try (Connection con = DB.sql2o.open()) {
+//                String sql = "INSERT INTO animals (name,type) VALUES (:name,:type)";
+//                this.id = (int) con.createQuery(sql, true)
+//                        .addParameter("name", this.name)
+//                        .addParameter("type", this.type)
+//                        .executeUpdate()
+//                        .getKey();
+//            }
+//        }
+
     public static List<Animals> getAllAnimals(){
-        String sql = "SELECT * FROM animals where type='animal';";
+        String sql = "SELECT * FROM animals WHERE endangered='false'";
 
         try (Connection con = DB.sql2o.open()){
             return   con.createQuery(sql)
-                    .throwOnMappingFailure(false)
+//                    .throwOnMappingFailure(false)
                     .executeAndFetch(Animals.class);
 
         }

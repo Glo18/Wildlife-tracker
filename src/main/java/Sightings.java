@@ -39,18 +39,18 @@ public class Sightings implements DatabaseManagement {
     }
 
     public static List<Sightings> getAllSightings(){
-        String sql = "SELECT * FROM sightings;";
+        String sql = "SELECT * FROM sightings";
 
         try (Connection con = DB.sql2o.open()){
-            Query query = con.createQuery(sql);
-            System.out.println(query.executeAndFetch(Sightings.class));
-            return query.executeAndFetch(Sightings.class);
+            return con.createQuery(sql)
+                    .throwOnMappingFailure(false)
+                    .executeAndFetch(Sightings.class);
         }
     }
 
     public void save() {
         try (Connection con = DB.sql2o.open()) {
-            String sql = "INSERT INTO sightings (location, rangerName, aniName) VALUES (:location, :rangerName, :aniName);";
+            String sql = "INSERT INTO sightings (location, rangerName, animalName) VALUES (:location, :rangerName, :animalName)";
             this.id = (int) con.createQuery(sql,true)
                     .throwOnMappingFailure(false)
                     .addParameter("location", this.location)
@@ -58,14 +58,14 @@ public class Sightings implements DatabaseManagement {
                     .addParameter("animalName", this.animalName)
                     .executeUpdate()
                     .getKey();
-            setId(id);
+//            setId(id);
         }catch (Sql2oException ex ){
             System.out.println(ex);
         }
     }
     public void delete() {
         try(Connection con = DB.sql2o.open()) {
-            String sql = "DELETE FROM sightings WHERE id = :id;";
+            String sql = "DELETE FROM sightings WHERE id = :id";
             con.createQuery(sql)
                     .addParameter("id", this.id)
                     .executeUpdate();

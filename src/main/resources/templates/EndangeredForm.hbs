@@ -6,18 +6,18 @@
 
 {{#partial "content"}}
     <body style="background-color: lightslategray; background-size:cover;">
-    <form action="/report"   method="post">
+    <form action="/EndangeredForm"   method="post">
         <div class="form-group">
-            <label for="name">Name of the Endagered Animal:{{animalName}}</label>
+            <label for="name">Name of the Endangered Animal:{{animalName}}</label>
             <input id="name" name="name" class="form-control" type="text" required>
         </div>
         <div class="form-group">
-            <label for="age">Health of the Endagered Animal: {{health}}</label>
-            <section id="health" name="health" type="text" class="form-control">
+            <label for="age">Health of the Endangered Animal: {{health}}</label>
+            <select id="health" name="health" type="text" class="form-control">
                 <option value="healthy">Healthy</option>
                 <option value="ill">Ill</option>
                 <option value="okay">Okay</option>
-            </section>
+            </select>
         </div>
         <div class="form-group">
             <label for="age">Age: {{age}}</label>
@@ -27,7 +27,7 @@
                 <option value="Adult">Adult</option>
             </select>
         </div>
-        <button class="btn btn-success" href="/SuccessEndagered" type="submit"> Submit</button>
+        <button class="btn btn-success" href="/SuccessEndangered" type="submit"> Submit</button>
     </form>
     </body>
 {{/partial}}
